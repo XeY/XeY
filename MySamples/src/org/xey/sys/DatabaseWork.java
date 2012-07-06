@@ -15,7 +15,6 @@ public class DatabaseWork {
 	private CallableStatement cstmt = null;
 
 	public DatabaseWork() {
-
 	}
 
 	public static Connection getMysqlConnection() {
@@ -28,45 +27,39 @@ public class DatabaseWork {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return newcon;
-
 	}
 
 	public boolean executeMySQL(String p_strSql) {
 		boolean OperSuccess = false;
 		int updateResult = 0;
 		try {
-			conn = getMysqlConnection();//
+			conn = getMysqlConnection();
 			conn.setAutoCommit(false);
 			if (conn == null) {
 				return OperSuccess;
 			} else {
 				stat = conn.createStatement();
 				if (p_strSql.trim().length() >= 6)
-					if (p_strSql.trim().substring(0, 6).toLowerCase().equals("select")) { //
+					if (p_strSql.trim().substring(0, 6).toLowerCase().equals("select")) {
 						rs = stat.executeQuery(p_strSql);
 						OperSuccess = true;
-					} else if (p_strSql.trim().substring(0, 6).toLowerCase().equals("update")) { // ����
+					} else if (p_strSql.trim().substring(0, 6).toLowerCase().equals("update")) {
 						updateResult = stat.executeUpdate(p_strSql);
 						if (updateResult == 1) {
 							OperSuccess = true;
 						}
-					} else { //
+					} else {
 						stat.execute(p_strSql);
 						OperSuccess = true;
-
 					}
 			}
 		} catch (SQLException e) {
 			OperSuccess = false;
 		}
-
 		return OperSuccess;
 	}
 
-	/**
-	 */
 	public void close() {
 		if (rs != null) {
 			try {
@@ -93,7 +86,6 @@ public class DatabaseWork {
 		}
 
 		if (conn != null) {
-
 			try {
 				if (!conn.isClosed()) {
 					try {
@@ -103,7 +95,6 @@ public class DatabaseWork {
 					} catch (SQLException e) {
 						e.printStackTrace();
 						conn.close();
-
 					}
 				}
 			} catch (SQLException e) {
